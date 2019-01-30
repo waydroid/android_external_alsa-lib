@@ -28,10 +28,8 @@ ltconfig
 *.pc
 *.o
 *~
-include/config.h
 include/stamp-h1
 include/stamp-vh
-include/version.h
 include/alsa
 include/asoundlib.h
 utils/alsa-lib.spec
@@ -44,8 +42,6 @@ m4/ltversion.m4
 m4/lt~obsolete.m4
 src/Versions
 src/conf/topology/sklrt286/data/pvt_data
-src/control/ctl_symbols_list.c
-src/pcm/pcm_symbols_list.c
 doc/doxygen/*
 doc/doxygen.cfg
 test/audio_time
