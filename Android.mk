@@ -32,7 +32,7 @@ alsa_conf_files := \
 
 include $(CLEAR_VARS)
 LOCAL_MODULE       := alsa-conf
-LOCAL_MODULE_TAGS  := optional eng
+LOCAL_MODULE_TAGS  := optional
 LOCAL_MODULE_CLASS := ETC
 LOCAL_MODULE_PATH  := $(TARGET_OUT)/usr/share/alsa
 LOCAL_SRC_FILES    := src/conf/alsa.conf
@@ -50,7 +50,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := libasound
 
-LOCAL_MODULE_TAGS := optional eng
+LOCAL_MODULE_TAGS := optional
 LOCAL_PRELINK_MODULE := false
 LOCAL_ARM_MODE := arm
 
