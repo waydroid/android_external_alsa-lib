@@ -11,7 +11,7 @@ include $(CLEAR_VARS)
 ##
 ## Copy ALSA configuration files to rootfs
 ##
-TARGET_ALSA_CONF_DIR := $(TARGET_OUT)/usr/share/alsa
+TARGET_ALSA_CONF_DIR := $(TARGET_OUT_VENDOR)/usr/share/alsa
 LOCAL_ALSA_CONF_DIR  := $(LOCAL_PATH)/src/conf
 
 copy_from := \
@@ -44,7 +44,7 @@ ALL_DEFAULT_INSTALLED_MODULES += $(copy_to)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := libasound
-
+LOCAL_PROPRIETARY_MODULE := true
 LOCAL_MODULE_TAGS := optional
 LOCAL_PRELINK_MODULE := false
 LOCAL_ARM_MODE := arm
@@ -55,7 +55,7 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/include
 # use of enums which are often type casted to unsigned ints.
 LOCAL_CFLAGS := \
 	-fPIC -DPIC -D_POSIX_SOURCE \
-	-DALSA_CONFIG_DIR=\"/system/usr/share/alsa\" \
+	-DALSA_CONFIG_DIR=\"/vendor/usr/share/alsa\" \
 	-DALSA_DEVICE_DIRECTORY=\"/dev/snd/\" \
 	-Wno-error
 
