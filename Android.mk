@@ -11,7 +11,10 @@ include $(CLEAR_VARS)
 ##
 ## Copy ALSA configuration files to rootfs
 ##
-alsa_conf_files := \
+TARGET_ALSA_CONF_DIR := $(TARGET_OUT)/usr/share/alsa
+LOCAL_ALSA_CONF_DIR  := $(LOCAL_PATH)/src/conf
+
+copy_from := \
 	alsa.conf \
 	pcm/dsnoop.conf \
 	pcm/modem.conf \
@@ -30,21 +33,13 @@ alsa_conf_files := \
 	pcm/front.conf \
 	cards/aliases.conf
 
-include $(CLEAR_VARS)
-LOCAL_MODULE       := alsa-conf
-LOCAL_MODULE_TAGS  := optional
-LOCAL_MODULE_CLASS := ETC
-LOCAL_MODULE_PATH  := $(TARGET_OUT)/usr/share/alsa
-LOCAL_SRC_FILES    := src/conf/alsa.conf
-include $(BUILD_PREBUILT)
+copy_to   := $(addprefix $(TARGET_ALSA_CONF_DIR)/,$(copy_from))
+copy_from := $(addprefix $(LOCAL_ALSA_CONF_DIR)/,$(copy_from))
 
-$(LOCAL_INSTALLED_MODULE):
-	mkdir -p $(TARGET_OUT)/usr/share/alsa
-	cd $(@D) && tar xvfz $(abspath $<)
+$(copy_to) : $(TARGET_ALSA_CONF_DIR)/% : $(LOCAL_ALSA_CONF_DIR)/% | $(ACP)
+	$(transform-prebuilt-to-target)
 
-$(LOCAL_BUILT_MODULE):
-	mkdir -p $(@D)
-	cd external/alsa-lib/src/conf && tar cvfz $(abspath $@) $(alsa_conf_files)
+ALL_DEFAULT_INSTALLED_MODULES += $(copy_to)
 
 include $(CLEAR_VARS)
 
