@@ -104,6 +104,22 @@ MASK_INLINE unsigned int snd_mask_count(const snd_mask_t *mask)
 	return w;
 }
 
+#ifdef HAVE___BUILTIN_FFS
+#define ffs __builtin_ffs
+#elif defined(_MSC_VER) && (_M_IX86 || _M_ARM || _M_AMD64 || _M_IA64)
+int ffs(int i)
+{
+	unsigned long index;
+	if (_BitScanForward(&index, i))
+		return index + 1;
+	else
+		return 0;
+}
+#else
+extern
+int ffs(int i);
+#endif
+
 MASK_INLINE unsigned int snd_mask_min(const snd_mask_t *mask)
 {
 	int i;
