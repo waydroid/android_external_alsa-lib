@@ -5,7 +5,7 @@
 #define ALOAD_DEVICE_DIRECTORY "/dev/"
 
 /* directory containing ALSA configuration database */
-#define ALSA_CONFIG_DIR "/system/usr/share/alsa"
+#define ALSA_CONFIG_DIR "/vendor/usr/share/alsa"
 
 /* Enable assert at error message handler */
 /* #undef ALSA_DEBUG_ASSERT */
@@ -14,7 +14,7 @@
 #define ALSA_DEVICE_DIRECTORY "/dev/snd/"
 
 /* directory containing ALSA add-on modules */
-#define ALSA_PLUGIN_DIR "/system/usr/lib/alsa-lib"
+#define ALSA_PLUGIN_DIR "/vendor/lib/hw/"
 
 /* Build hwdep component */
 #define BUILD_HWDEP "1"

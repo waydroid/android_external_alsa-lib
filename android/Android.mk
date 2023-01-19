@@ -11,15 +11,55 @@
 LOCAL_PATH := $(dir $(call my-dir))
 include $(CLEAR_VARS)
 
+##
+## Copy ALSA configuration files to rootfs
+##
+TARGET_ALSA_CONF_DIR := $(TARGET_OUT_VENDOR)/usr/share/alsa
+LOCAL_ALSA_CONF_DIR  := $(LOCAL_PATH)/src/conf
+
+copy_from := \
+	alsa.conf \
+	pcm/dsnoop.conf \
+	pcm/modem.conf \
+	pcm/dpl.conf \
+	pcm/default.conf \
+	pcm/surround51.conf \
+	pcm/surround41.conf \
+	pcm/surround50.conf \
+	pcm/dmix.conf \
+	pcm/center_lfe.conf \
+	pcm/surround40.conf \
+	pcm/side.conf \
+	pcm/iec958.conf \
+	pcm/rear.conf \
+	pcm/surround71.conf \
+	pcm/front.conf \
+	cards/aliases.conf
+
+copy_to   := $(addprefix $(TARGET_ALSA_CONF_DIR)/,$(copy_from))
+copy_from := $(addprefix $(LOCAL_ALSA_CONF_DIR)/,$(copy_from))
+
+$(copy_to) : $(TARGET_ALSA_CONF_DIR)/% : $(LOCAL_ALSA_CONF_DIR)/% | $(ACP)
+	$(transform-prebuilt-to-target)
+
+ALL_DEFAULT_INSTALLED_MODULES += $(copy_to)
+
+include $(CLEAR_VARS)
+
 LOCAL_MODULE := libasound
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
+LOCAL_PROPRIETARY_MODULE := true
+LOCAL_ARM_MODE := arm
 
 LOCAL_CFLAGS := -DPIC -Wno-absolute-value -Wno-address-of-packed-member \
 	-Wno-missing-braces -Wno-missing-field-initializers \
 	-Wno-pointer-arith -Wno-sign-compare -Wno-unused-function \
 	-Wno-unused-const-variable -Wno-unused-parameter -Wno-unused-variable \
 	-finline-limit=300 -finline-functions -fno-inline-functions-called-once
+
+LOCAL_CFLAGS += \
+	-DHAVE_LFS=1
 
 # list of files to be excluded
 EXCLUDE_SRC_FILES := \
