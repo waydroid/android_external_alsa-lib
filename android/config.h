@@ -14,8 +14,8 @@
 #define ALSA_DEVICE_DIRECTORY "/dev/snd/"
 
 /* directory containing ALSA add-on modules */
-#if defined(__aarch64__)
-/* If we are on an arm64 build -- then the lib dir is lib64. */
+#if defined(__LP64__)
+/* For any 64-bit build, vendor shared libraries live under lib64. */
 #define ALSA_PLUGIN_DIR "/vendor/lib64/hw/"
 #else
 #define ALSA_PLUGIN_DIR "/vendor/lib/hw/"
